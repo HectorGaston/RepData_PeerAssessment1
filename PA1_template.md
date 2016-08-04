@@ -38,10 +38,13 @@ median_steps <- median(steps_by_date)
 ```
 
 ![Figure 1](figure/figure1.png) 
+<!-- These statistics are generated when compiling the document, but since it won't be compiled by reviewers, I'll put the answers directly
+* **Mean of steps taken per day:** 9354
+* **Median of steps taken per day:** 10395
+-->
 
 * **Mean of steps taken per day:** 9354
 * **Median of steps taken per day:** 10395
-
 
 ## What is the average daily activity pattern?
 
@@ -66,6 +69,9 @@ interval_index = which.max(steps_averaged_by_interval$steps)
 ```
 
 ![Figure 2](figure/figure2.png)
+<!--
+**The 5-minute interval with the maximum average number of steps has identifier:** 835
+-->
 
 **The 5-minute interval with the maximum average number of steps has identifier:** 835
 
@@ -105,14 +111,20 @@ mean_steps2 <- mean(steps_by_date2)
 median_steps2 <- median(steps_by_date2)
 ```
 
-**Total number of rows with NA's is:** 2304 
+<!-- **Total number of rows with NA's is:** 2304 -->
+
+**Total number of rows with NA's is:** 2304
 
 ![Figure 3](figure/figure3.png)
 
 After filling NA's values:  
 
+<!--
 * **Mean of steps taken per day:** 10766  
-* **Median of steps taken per day:** 10766  
+* **Median of steps taken per day:** 10766  -->
+
+* **Mean of steps taken per day:** 10766  
+* **Median of steps taken per day:** `10766
 
 The values changed because of filling the missing values. The chosen strategy had an impact in these statistics: the steps variable is more symmetric and thus the median and the mean have similar values.
 
