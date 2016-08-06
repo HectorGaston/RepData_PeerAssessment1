@@ -9,7 +9,7 @@ transforming the data later on. This is all the data transformation we'll need.
 library(lattice)
 library(stats)
 
-df <- read.csv('activity.csv', header = T, 
+df <- read.csv('./activity.csv', header = T, 
                colClasses = c(steps = 'numeric', date = 'Date', interval = 'numeric'),
                na.strings = 'NA')
 ```
@@ -22,7 +22,7 @@ Ignoring missing values as specified.
 #Calculate the sum of steps taken each day, ignoring NA's
 steps_by_date <- by(df, df$date, function(x) sum(x$steps, na.rm = T))
 
-png('figure/figure1.png')
+png('./figure/figure1.png')
 hist(steps_by_date, main = 'Histogram of the total number of steps taken each day', col = 'blue', xlab = 'steps')
 dev.off()
 ```
@@ -37,11 +37,7 @@ mean_steps <- mean(steps_by_date)
 median_steps <- median(steps_by_date)
 ```
 
-![Figure 1](figure/figure1.png) 
-<!-- These statistics are generated when compiling the document, but since it won't be compiled by reviewers, I'll put the answers directly
-* **Mean of steps taken per day:** 9354
-* **Median of steps taken per day:** 10395
--->
+![Figure 1](./figure/figure1.png) 
 
 * **Mean of steps taken per day:** 9354
 * **Median of steps taken per day:** 10395
@@ -51,7 +47,7 @@ median_steps <- median(steps_by_date)
 ```r
 steps_averaged_by_interval = aggregate(steps ~ interval, data = df, FUN = mean)
 
-png('figure/figure2.png')
+png('./figure/figure2.png')
 xyplot(steps ~ interval, 
        data = steps_averaged_by_interval,
        type = 'l',
@@ -68,10 +64,7 @@ dev.off()
 interval_index = which.max(steps_averaged_by_interval$steps)
 ```
 
-![Figure 2](figure/figure2.png)
-<!--
-**The 5-minute interval with the maximum average number of steps has identifier:** 835
--->
+![Figure 2](./figure/figure2.png)
 
 **The 5-minute interval with the maximum average number of steps has identifier:** 835
 
@@ -96,7 +89,7 @@ rownames(df2) <- NULL  #Reset indexes
 
 steps_by_date2 <- by(df2, df2$date, function(x) sum(x$steps))
 
-png('figure/figure3.png')
+png('./figure/figure3.png')
 hist(steps_by_date2, main = 'Histogram of the total number of steps taken each day (NAs filled)', col = 'blue', xlab = 'steps')
 dev.off()
 ```
@@ -111,20 +104,14 @@ mean_steps2 <- mean(steps_by_date2)
 median_steps2 <- median(steps_by_date2)
 ```
 
-<!-- **Total number of rows with NA's is:** 2304 -->
+**Total number of rows with NA's is:** 2304 
 
-**Total number of rows with NA's is:** 2304
-
-![Figure 3](figure/figure3.png)
+![Figure 3](./figure/figure3.png)
 
 After filling NA's values:  
 
-<!--
 * **Mean of steps taken per day:** 10766  
-* **Median of steps taken per day:** 10766  -->
-
-* **Mean of steps taken per day:** 10766  
-* **Median of steps taken per day:** `10766
+* **Median of steps taken per day:** 10766  
 
 The values changed because of filling the missing values. The chosen strategy had an impact in these statistics: the steps variable is more symmetric and thus the median and the mean have similar values.
 
@@ -132,12 +119,21 @@ The values changed because of filling the missing values. The chosen strategy ha
 Factor variable in the form of a new column: *daytype*.
 
 ```r
+#For getting weekdays response in English
+Sys.setlocale("LC_TIME", "C")
+```
+
+```
+## [1] "C"
+```
+
+```r
 df2$daytype <- ifelse(weekdays(df$date) == 'Sunday' | weekdays(df$date) == 'Saturday', 'Weekend', 'Weekday')
 
 #This time we consider interval and daytype
 steps_averaged_by_interval2 = aggregate(steps ~ interval * daytype, data = df2, FUN = mean)
 
-png('figure/figure4.png')
+png('./figure/figure4.png')
 xyplot(steps ~ interval | daytype, 
        data = steps_averaged_by_interval2,
        type = 'l',
@@ -150,4 +146,4 @@ dev.off()
 ##   2
 ```
 
-![Figure 4](figure/figure4.png)
+![Figure 4](./figure/figure4.png)
